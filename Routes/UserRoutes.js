@@ -26,5 +26,5 @@ router.post("/login", userLogin);
 router.post("/send-otp", saveAndSendOTP);
 
 router.post("/create-timestamp", authMiddleware, createTimestamp);
-router.post("/delete-timestamp", authMiddleware, deleteTimestamp);
+router.delete("/delete-timestamp", authMiddleware, deleteTimestamp);
 module.exports = router;
