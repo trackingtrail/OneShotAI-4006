@@ -25,7 +25,6 @@ const userRegister = async (req, res) => {
       "string.email": `Please provide a valid email address`,
     });
 
-    // Validate user inputs
     const { error } = schema.validate({ email, password });
     if (error) {
       return res.status(400).json({
@@ -33,7 +32,6 @@ const userRegister = async (req, res) => {
       });
     }
 
-    // Check if email already exists in the database
     const emailExists = await User.exists({ email });
     if (emailExists) {
       return res.status(409).json({
@@ -41,7 +39,6 @@ const userRegister = async (req, res) => {
       });
     }
 
-    // Verify OTP and get the OTPVerification document
     const otpDocument = await OTPVerification.findOne({ email });
     if (!otpDocument) {
       return res.status(404).json({
