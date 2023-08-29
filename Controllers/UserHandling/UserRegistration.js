@@ -15,7 +15,7 @@ const userRegister = async (req, res) => {
 
     const schema = Joi.object({
       email: Joi.string().email().required(),
-      password: Joi.string().min(8).max(75).required(),
+      password: Joi.string().min(6).max(75).required(),
     }).messages({
       "string.base": `{#label} must be a string`,
       "string.empty": `{#label} is required`,
