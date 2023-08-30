@@ -17,6 +17,15 @@ const createTimestamp = async (req, res) => {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const email = decodedToken.email;
 
+    const existingTimestamp = await Timestamp.findOne({ email });
+
+    if (existingTimestamp) {
+      return res.status(400).json({
+        message:
+          "An appointment has previously been scheduled for this user. Please consider deleting the existing appointment before creating a new one.",
+      });
+    }
+
     const newTimestamp = new Timestamp({
       email,
       timestamp,

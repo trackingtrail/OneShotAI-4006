@@ -6,11 +6,18 @@ const authMiddleware = require("../Controllers/UserHandling/JWTAuth");
 const {
   saveAndSendOTP,
 } = require("../Controllers/UserHandling/SaveAndSendOTP");
-const { createTimestamp } = require("../Controllers/UserHandling/CreateTimestamp");
+const {
+  createTimestamp,
+} = require("../Controllers/UserHandling/CreateTimestamp");
 
 const express = require("express");
-const { deleteTimestamp } = require("../Controllers/UserHandling/DeleteTimeStamp");
+const {
+  deleteTimestamp,
+} = require("../Controllers/UserHandling/DeleteTimeStamp");
+
 const router = express.Router();
+
+const { viewTimestamp } = require("../Controllers/UserHandling/ViewTimestamp");
 
 /**
 Endpoints:
@@ -19,6 +26,7 @@ Endpoints:
 - POST /send-otp: sends an otp to the email address.
 - POST /create-timestamp: creating a timestamp.
 - POST /delete-timestamp: deleting a timestamp.
+- GET /view-timestamp: retrieving a timestamp.
 **/
 
 router.post("/register", userRegister);
@@ -27,4 +35,10 @@ router.post("/send-otp", saveAndSendOTP);
 
 router.post("/create-timestamp", authMiddleware, createTimestamp);
 router.delete("/delete-timestamp", authMiddleware, deleteTimestamp);
+router.get("/view-timestamp", authMiddleware, viewTimestamp);
+
+router.get("/dashboard", authMiddleware, (req, res) => {
+  res.status(200).json({ message: "Authenticated" });
+});
+
 module.exports = router;
